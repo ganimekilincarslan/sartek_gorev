@@ -1,0 +1,44 @@
+### Başlamadan Önce
+```bash
+pkill -9 -x px4 2>/dev/null || true
+pkill -9 -x MicroXRCEAgent 2>/dev/null || true
+pkill -9 -f "gz sim" 2>/dev/null || true
+
+##1.Terminal
+source /opt/ros/humble/setup.bash
+source ~/sartek_siha_ws/install/setup.bash
+ros2 launch sartek_sim sim.launch.py
+
+##2.Terminal (bridge)
+source /opt/ros/humble/setup.bash
+source ~/sartek_siha_ws/install/setup.bash
+ros2 launch sartek_px4_bridge px4_bridge.launch.py
+
+###3.Terminal (qground)
+~/.local/bin/qgroundcontrol
+
+###4.Terminal (otonom görev)
+source /opt/ros/humble/setup.bash
+source ~/sartek_siha_ws/install/setup.bash
+python3 ~/gorev_waypoint/waypoint_mission_node.py
+
+###5.Terminal (waypoint)
+  parça parça:
+source /opt/ros/humble/setup.bash
+source ~/sartek_siha_ws/install/setup.bash
+python3 ~/gorev_waypoint/gcs_waypoint_sender.py --parca
+  toplu:
+source /opt/ros/humble/setup.bash
+source ~/sartek_siha_ws/install/setup.bash
+python3 ~/gorev_waypoint/gcs_waypoint_sender.py
+
+###Terminalden Takeoff:
+source /opt/ros/humble/setup.bash
+source ~/sartek_siha_ws/install/setup.bash
+ros2 topic pub --once /gorev/vehicle_command std_msgs/msg/String "{data: 'ARM'}"
+ros2 topic pub --once /gorev/vehicle_command std_msgs/msg/String "{data: 'TAKEOFF'}"
+
+###Temiz kapatma
+pkill -9 -x px4 2>/dev/null || true
+pkill -9 -x MicroXRCEAgent 2>/dev/null || true
+pkill -9 -f "gz sim" 2>/dev/null || true 
