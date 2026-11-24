@@ -16,7 +16,7 @@ class WaypointMissionNode(Node):
         self.acceptance_radius_m = 25.0   # Hedefe yatayda 25m yaklaşınca geç
         self.min_takeoff_alt_m = 15.0     # QGC kalkışının tamamlandığını anlama irtifası
         self.cruise_speed_mps = 18.0      # Seyir hızı (m/s)
-        self.rtl_wait_sec = 40.0          # RTL'de ne kadar süre (saniye) kalsın?
+        self.rtl_wait_sec = 60.0          # RTL'de ne kadar süre (saniye) kalsın?
 
         # Görev durumu ve waypoint kuyruğu
         self.waypoints = []               # [(x, y, z), ...]
